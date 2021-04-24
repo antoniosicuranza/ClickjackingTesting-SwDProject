@@ -12,7 +12,7 @@ public class disablingJavascript {
 	}
 	
 	public boolean securityRestricted() throws IOException {
-		String urltext = "http://localhost:8080/ClickjackingWebSource/disablingJavascriptTest.html";
+		String urltext = "http://localhost:8080/ClickjackingTest/disablingJavascriptTest.html";
 	    URL url = new URL(urltext);
 	    int responseCode = ((HttpURLConnection) url.openConnection()).getResponseCode();
 	    if(responseCode==200) {
@@ -22,7 +22,7 @@ public class disablingJavascript {
 	    }
 	}
 	public boolean sandbox() throws IOException {
-		String urltext = "http://localhost:8080/ClickjackingWebSource/disablingJavascriptTest2.html";
+		String urltext = "http://localhost:8080/ClickjackingTest/disablingJavascriptTest2.html";
 	    URL url = new URL(urltext);
 	    int responseCode = ((HttpURLConnection) url.openConnection()).getResponseCode();
 	    if(responseCode==200) {
