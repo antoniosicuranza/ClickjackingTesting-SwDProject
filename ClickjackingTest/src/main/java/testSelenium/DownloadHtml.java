@@ -21,7 +21,6 @@ public class DownloadHtml {
 		driver.get("http://localhost:8080/ClickjackingTest/disablingJavascriptTest2.html");
 		//int size = driver.findElements(By.tagName("iframe")).size();
 		driver.switchTo().frame(driver.findElementByTagName("iframe"));
-		driver.switchTo().frame(driver.findElementByTagName("iframe"));
 		System.out.println(driver.getPageSource());
 	}
 
