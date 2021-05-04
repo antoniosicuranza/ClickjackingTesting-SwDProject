@@ -1,8 +1,10 @@
 package doubleFraming;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
+
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 public class DoubleFraming {
 	public boolean doubleCalling() throws IOException {
@@ -10,14 +12,18 @@ public class DoubleFraming {
 	}
 	
 	public boolean calling() throws IOException {
-		String urlTxt = "http://localhost:8080/doubleFraming/fictitious2.html";
-		URL url = new URL(urlTxt);
-		int responseCode = ((HttpURLConnection) url.openConnection()).getResponseCode();
-		System.out.println("ResponseCode: "+responseCode);
-		if(responseCode==200)
-			return true;
-		else
-			return false;
+		boolean result = true;
+		ChromeDriver driver = new ChromeDriver();
+		driver.get("http://localhost:8080/ClickjackingTest/fictitious2.html");
+		driver.switchTo().frame(driver.findElementByTagName("iframe"));
+		try {
+			 driver.findElementByTagName("style");
+		}catch (NoSuchElementException exception) {
+			result = false;
+		}
+		System.out.println("Restricted: "+result);
+	    driver.quit();
+	    return result ;
 		
 	}
 }
