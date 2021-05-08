@@ -5,12 +5,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<script>
-	    if ( top != self )
-	    {
-	        top.location=self.location;
-	    }
-	</script>
-	<iframe src="http://localhost:3000/?param=<script>if"></iframe>
+	<iframe src="http://localhost:3000/?param=if(top+!%3D+self)+%7B+top.location%3Dself.location%3B+%7D"></iframe>
 </body>
 </html>
