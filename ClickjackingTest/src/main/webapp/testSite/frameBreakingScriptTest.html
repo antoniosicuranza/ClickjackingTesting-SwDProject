@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<style id="antiClickjack">
+    body{display:none !important;}
+</style>
+<script type="text/javascript">
+    if (self === top) {
+        var antiClickjack = document.getElementById("antiClickjack");
+        antiClickjack.parentNode.removeChild(antiClickjack);
+    } else {
+        top.location = self.location;
+    }
+</script>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h1> Legacy Browser Frame Breaking Script</h1>
+</body>
+</html>
