@@ -21,14 +21,14 @@ public class DisablingJavascript {
 		boolean result=true;
 		ChromeDriver driver = new ChromeDriver();
 		driver.get("http://localhost:8080/ClickjackingTest/disablingJavascriptTest.html");
-		driver.switchTo().frame(driver.findElementByTagName("iframe"));
 		try {
+			driver.switchTo().frame(driver.findElementByTagName("iframe"));
 			 driver.findElementByTagName("style");
 		}catch (NoSuchElementException exception) {
 			result = false;
 		}		
 		System.out.println("Restricted: "+result);
-	    driver.quit();
+	   // driver.quit();
 	    return result ;
 
 	}
@@ -37,14 +37,14 @@ public class DisablingJavascript {
 		boolean result=true;
 		ChromeDriver driver = new ChromeDriver();
 		driver.get("http://localhost:8080/ClickjackingTest/disablingJavascriptTest2.html");
-		driver.switchTo().frame(driver.findElementByTagName("iframe"));
 		try {
+			driver.switchTo().frame(driver.findElementByTagName("iframe"));
 			 driver.findElementByTagName("style");
 		}catch (NoSuchElementException exception) {
 			result = false;
 		}
 		System.out.println("Sandbox: "+result);
-	    driver.quit();
+	    //driver.quit();
 	    return result ;
 	}
 	
