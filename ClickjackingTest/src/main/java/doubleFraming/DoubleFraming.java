@@ -15,8 +15,8 @@ public class DoubleFraming {
 		boolean result = true;
 		ChromeDriver driver = new ChromeDriver();
 		driver.get("http://localhost:8080/ClickjackingTest/fictitious2.html");
-		driver.switchTo().frame(driver.findElementByTagName("iframe"));
 		try {
+			driver.switchTo().frame(driver.findElementByTagName("iframe"));
 			 driver.findElementByTagName("style");
 		}catch (NoSuchElementException exception) {
 			result = false;

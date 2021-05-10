@@ -9,8 +9,8 @@ public class OnBeforeUnloadEvent {
 		boolean result=true;
 		ChromeDriver driver = new ChromeDriver();
 		driver.get("http://localhost:8080/ClickjackingTest/onBeforeUnloadEventTest.html");
-		driver.switchTo().frame(driver.findElementByTagName("iframe"));
 		try {
+			driver.switchTo().frame(driver.findElementByTagName("iframe"));
 			 driver.findElementByTagName("style");
 		}catch (NoSuchElementException exception) {
 			result = false;

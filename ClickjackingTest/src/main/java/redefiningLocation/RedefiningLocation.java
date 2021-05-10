@@ -12,8 +12,8 @@ public class RedefiningLocation {
 			boolean result=true;
 			InternetExplorerDriver driver = new InternetExplorerDriver();
 			driver.get("http://localhost:8080/ClickjackingTest/redefiningLocationIE.html");
-			driver.switchTo().frame(driver.findElementByTagName("iframe"));
 			try {
+				driver.switchTo().frame(driver.findElementByTagName("iframe"));
 				 driver.findElementByTagName("style");
 			}catch (NoSuchElementException exception) {
 				result = false;

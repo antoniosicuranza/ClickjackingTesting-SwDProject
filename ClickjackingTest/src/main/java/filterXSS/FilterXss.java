@@ -13,8 +13,8 @@ public class FilterXss {
 
 		ChromeDriver driver = new ChromeDriver();
 		driver.get("http://localhost:8080/ClickjackingTest/filter_xss_chrome.html");
-		driver.switchTo().frame(driver.findElementByTagName("iframe"));
 		try {
+			driver.switchTo().frame(driver.findElementByTagName("iframe"));
 			 driver.findElementByTagName("style");
 		}catch (NoSuchElementException exception) {
 			result = false;
@@ -31,8 +31,8 @@ public class FilterXss {
 
 		InternetExplorerDriver driver = new InternetExplorerDriver();
 		driver.get("http://localhost:8080/ClickjackingTest/filter_xss_IE8.html");
-		driver.switchTo().frame(driver.findElementByTagName("iframe"));
 		try {
+			driver.switchTo().frame(driver.findElementByTagName("iframe"));
 			 driver.findElementByTagName("style");
 		}catch (NoSuchElementException exception) {
 			result = false;
