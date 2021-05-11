@@ -14,29 +14,30 @@ public class DisablingJavascript {
 	
 	
 	public boolean disablingJavascriptRun() throws IOException {
-	return securityRestricted() && sandbox();
+	return sandbox();
 	}
 	
-	public boolean securityRestricted() throws IOException {
-		boolean result=true;
-		ChromeDriver driver = new ChromeDriver();
-		driver.get("http://localhost:8080/ClickjackingTest/disablingJavascriptTest.html");
-		try {
-			driver.switchTo().frame(driver.findElementByTagName("iframe"));
-			 driver.findElementByTagName("style");
-		}catch (NoSuchElementException exception) {
-			result = false;
-		}		
-		System.out.println("Restricted: "+result);
-	   // driver.quit();
-	    return result ;
-
-	}
+// DEPRECATED METHOD
+//	public boolean securityRestricted() throws IOException {
+//		boolean result=true;
+//		ChromeDriver driver = new ChromeDriver();
+//		driver.get("http://localhost:8080/ClickjackingTest/ReferenceClickjackingSites");
+//		try {
+//			driver.switchTo().frame(driver.findElementByTagName("iframe"));
+//			 driver.findElementByTagName("style");
+//		}catch (NoSuchElementException exception) {
+//			result = false;
+//		}		
+//		System.out.println("Restricted: "+result);
+//	    //driver.quit();
+//	    return result ;
+//
+//	}
 	
 	public boolean sandbox() throws IOException {
 		boolean result=true;
 		ChromeDriver driver = new ChromeDriver();
-		driver.get("http://localhost:8080/ClickjackingTest/disablingJavascriptTest2.html");
+		driver.get("http://localhost:8080/ClickjackingTest/ReferenceClickjackingSites");
 		try {
 			driver.switchTo().frame(driver.findElementByTagName("iframe"));
 			 driver.findElementByTagName("style");
@@ -44,7 +45,7 @@ public class DisablingJavascript {
 			result = false;
 		}
 		System.out.println("Sandbox: "+result);
-	    //driver.quit();
+	    driver.quit();
 	    return result ;
 	}
 	
