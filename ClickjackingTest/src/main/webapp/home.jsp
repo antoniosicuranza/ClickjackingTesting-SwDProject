@@ -31,6 +31,15 @@ function change(){
 		ele2.checked=false;
 	}
 }
+function change2(){
+	var ele=document.getElementById('disablingJavascript');  
+	var ele2=document.getElementById('extra2');
+	if(ele.checked==true){
+		ele2.checked=true;
+	}else{
+		ele2.checked=false;
+	}
+}
 </script>
 </head>
 <body>
@@ -52,7 +61,7 @@ function change(){
   			<input type="button" class="button_all" onclick='deSelect()' value="Deselect All"/>  
   			 
    			<label class="control control-checkbox" style="margin-top:3%;">
-       			<input type="checkbox" id="disablingJavascript" name="test" value="1"/><div class="control_indicator"></div>
+       			<input type="checkbox" id="disablingJavascript" name="test" value="0" onclick="change2()"/><div class="control_indicator"></div>
       			Disabling Javascript         
   			</label>
     
@@ -77,6 +86,7 @@ function change(){
 		    </label>
 		    
         		<input type="checkbox" id="extra" name="test" value="4" style="opacity:0%;" />
+        		<input type="checkbox" id="extra2" name="test" value="1" style="opacity:0%;" />
         	
 
     		<p align="center">
