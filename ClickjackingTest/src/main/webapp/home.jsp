@@ -21,7 +21,16 @@ function deSelect(){
             ele[i].checked=false;  
           
     }  
-}             
+}
+function change(){
+	var ele=document.getElementById('filterXSS');  
+	var ele2=document.getElementById('extra');
+	if(ele.checked==true){
+		ele2.checked=true;
+	}else{
+		ele2.checked=false;
+	}
+}
 </script>
 </head>
 <body>
@@ -53,19 +62,22 @@ function deSelect(){
 		    </label>
     
     		<label class="control control-checkbox">
-        		<input type="checkbox" id="filterXSS" name="test" value="3"/><div class="control_indicator"></div>
+        		<input type="checkbox" id="filterXSS" name="test" value="3" onclick="change()"/><div class="control_indicator"></div>
         		Filter XSS
     		</label>
-    
+  			
 		    <label class="control control-checkbox">
-		      	<input type="checkbox"  id="onBeforeUnloadEvent" name="test" value="4"/> <div class="control_indicator"></div> 
+		      	<input type="checkbox"  id="onBeforeUnloadEvent" name="test" value="5"/> <div class="control_indicator"></div> 
 		       	onBeforeUnload Event
 		    </label>
 		    
 		    <label class="control control-checkbox">
-		       	<input type="checkbox"  id="redefiningLocation" name="test" value="5"/><div class="control_indicator"></div> 
+		       	<input type="checkbox"  id="redefiningLocation" name="test" value="6"/><div class="control_indicator"></div> 
 		        Redefining Location
 		    </label>
+		    
+        		<input type="checkbox" id="extra" name="test" value="4" style="opacity:0%;" />
+        	
 
     		<p align="center">
     			<input type="submit"class="button_start"value="Start testing!" />
