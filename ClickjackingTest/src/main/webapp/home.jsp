@@ -85,8 +85,8 @@ function change2(){
 		        Redefining Location
 		    </label>
 		    
-        		<input type="checkbox" id="extra" name="test" value="4" style="opacity:0%;" />
-        		<input type="checkbox" id="extra2" name="test" value="1" style="opacity:0%;" />
+        		<input type="checkbox" id="extra" name="test" value="4" style="opacity:0%;" disabled />
+        		<input type="checkbox" id="extra2" name="test" value="1" style="opacity:0%;" disabled />
         	
 
     		<p align="center">
