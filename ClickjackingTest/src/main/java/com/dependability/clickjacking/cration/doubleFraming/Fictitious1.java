@@ -14,7 +14,7 @@ public class Fictitious1 implements ClickJacking {
 	
 	public Fictitious1(String src){
 		this.src = src;
-	    f = new File("src\\main\\webapp\\fictitious.html");
+	    f = new File("src\\main\\webapp\\html_generated\\fictitious.html");
 	}
 	
 	@Override
@@ -43,7 +43,7 @@ public class Fictitious1 implements ClickJacking {
         BufferedWriter bw;
 		bw = new BufferedWriter(new FileWriter(f));
 		bw.write("<html><body>");
-	    bw.write("<iframe src=\"" + src + "\"></iframe>");
+	    bw.write("<iframe src=\"" + src + "\" class=\"malicious\"></iframe>");
 	    bw.write("</body></html>");
 	    bw.close();
 		
