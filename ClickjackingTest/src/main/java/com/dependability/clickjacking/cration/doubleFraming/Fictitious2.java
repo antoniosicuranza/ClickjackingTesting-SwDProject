@@ -14,17 +14,15 @@ public class Fictitious2 implements ClickJacking {
 
 	public Fictitious2(String src){
 		this.src = src;
-		f = new File("src\\main\\webapp\\fictitious2.html");
+		f = new File("src\\main\\webapp\\html_generated\\fictitious2.html");
 	}
 	@Override
 	public void creation() throws IOException{
 		Fictitious1 fictitious = new Fictitious1(src);
 		fictitious.creation();
-		File f = new File("src\\main\\webapp\\fictitious.html");
-        BufferedWriter bw;
-		bw = new BufferedWriter(new FileWriter(f));
+        BufferedWriter bw = new BufferedWriter(new FileWriter(f));
 		bw.write("<html><body>");
-	    bw.write("<iframe src =\"" + fictitious.getHtmlFile().getName() + "\"></iframe>");
+	    bw.write("<iframe src =\"" + fictitious.getHtmlFile().getName() + "\" class=\"malicious\"></iframe>");
 	    bw.write("</body></html>");
 	    bw.close();
 	}
