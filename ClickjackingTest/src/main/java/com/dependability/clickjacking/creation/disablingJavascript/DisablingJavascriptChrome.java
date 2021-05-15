@@ -15,7 +15,7 @@ public class DisablingJavascriptChrome implements ClickJacking{
 	
 	public DisablingJavascriptChrome(String src){
 		this.src = src;
-		f = new File("src\\main\\webapp\\disablingJavascript.html");
+		f = new File("src\\main\\webapp\\html_generated\\disablingJavascriptChrome.html");
 	}
 	
 	@Override
@@ -44,7 +44,7 @@ public class DisablingJavascriptChrome implements ClickJacking{
 	public void creation() throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(f));
         bw.write("<html><body>");
-        bw.write("<iframe src="+src+" sandbox></iframe>");
+        bw.write("<iframe src=\""+src+"\" sandbox class=\"malicious\"></iframe>");
         bw.write("</body></html>");
         bw.close();		
 	}
