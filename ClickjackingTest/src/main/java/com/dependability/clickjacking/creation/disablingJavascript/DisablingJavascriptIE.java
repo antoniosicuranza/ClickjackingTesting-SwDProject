@@ -15,7 +15,7 @@ public class DisablingJavascriptIE implements ClickJacking{
 	
 	public DisablingJavascriptIE(String src){
 		this.src = src;
-		f = new File("src\\main\\webapp\\disablingJavascript.html");
+		f = new File("src\\main\\webapp\\html_generated\\disablingJavascriptIEEE.html");
 	}
 	
 	@Override
@@ -44,7 +44,7 @@ public class DisablingJavascriptIE implements ClickJacking{
 	public void creation() throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(f));
         bw.write("<html><body>");
-        bw.write("<iframe src="+src+" security=\"restricted\"></iframe>");
+        bw.write("<iframe src=\""+src+"\" security=\"restricted\" class=\"malicious\"></iframe>");
         bw.write("</body></html>");
         bw.close();		
 	}
