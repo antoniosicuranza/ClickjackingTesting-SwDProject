@@ -15,7 +15,7 @@ public class RedefiningLocation implements ClickJacking{
 	
 	public RedefiningLocation(String src){
 		this.src = src;
-		f = new File("src\\main\\webapp\\redefiningLocation.html");
+		f = new File("src\\main\\webapp\\html_generated\\redefiningLocation.html");
 	}
 	
 	@Override
@@ -47,7 +47,7 @@ public class RedefiningLocation implements ClickJacking{
         bw.write("<script>\r\n"
         		+ "	    var location = \"dummy\";\r\n"
         		+ "	</script>\r\n");
-        bw.write("	<iframe src="+src+"></iframe>");
+        bw.write("	<iframe src=\""+src+"\" class=\"malicious\"></iframe>");
         bw.write("</body></html>");
         bw.close();		
 	}
