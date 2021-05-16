@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.dependability.clickjacking.reference.References;
+import com.dependability.clickjacking.testing.TestingClcikJacking;
 
 /**
  * Servlet implementation class ReferenceClickjackingSites
@@ -16,7 +17,7 @@ import com.dependability.clickjacking.reference.References;
 public class ReferenceClickjackingSites extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public String url;
-    public boolean[] check= {false,false,false,false,false}; 
+    public boolean[] check= {false,false,false,false,false,false,false}; 
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -37,15 +38,13 @@ public class ReferenceClickjackingSites extends HttpServlet {
 		//request.getRequestDispatcher(ref.getPage()).forward(request, response);
 		url=request.getParameter("url");
 		System.out.println("url:"+url);
-		for(int i = 0; i<5; i++) {
+		for(int i = 0; i<7; i++) {
 			check[i]=request.getParameter(""+i) != null;
 		}
 		
-		References ref = new References (url,1);
-		ref.selectAttack();
-		request.setAttribute("link", ref.getSrc());
-		request.getRequestDispatcher(ref.getPage()).forward(request, response);
-		
+		TestingClcikJacking test = new TestingClcikJacking(url, check);
+		test.creationEvnviroment();
+		test.executionTest();
 	}
 
 	/**
