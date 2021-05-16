@@ -15,7 +15,7 @@ public class OnBeforeUnloadEvent implements ClickJacking{
 	
 	public OnBeforeUnloadEvent(String src){
 		this.src = src;
-		f = new File("src\\main\\webapp\\onBeforeUnloadEvent.html");
+		f = new File("src\\main\\webapp\\html_generated\\onBeforeUnloadEvent.html");
 	}
 	
 	@Override
@@ -57,7 +57,7 @@ public class OnBeforeUnloadEvent implements ClickJacking{
         		+ "		            }\r\n"
         		+ "		        }, 1);\r\n"
         		+ "		</script>");
-	    bw.write("<iframe src="+src+"></iframe>");
+	    bw.write("<iframe src=\""+src+"\" class=\"malicious\"></iframe>");
         bw.write("</body></html>");
         bw.close();		
 	}
