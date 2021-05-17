@@ -3,6 +3,7 @@ package com.dependability.clickjacking.testing;
 import java.io.File;
 import java.io.IOException;
 
+import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -116,19 +117,18 @@ public class TestingClcikJacking {
 	
 	private boolean test(ClickJacking clickJacking, int browser, int idAttack) throws IOException {// browser tra i parametri
 		try {
-			Thread.sleep(3000);//Wait  time for the deploy of the html generated on server
+			Thread.sleep(10000);//Wait  time for the deploy of the html generated on server
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		boolean result = true;
 		String link = "http://localhost:8080/ClickjackingTest/html_generated/"+clickJacking.getHtmlFile().getName();
-		if(browser == 0) {
+        if(browser == 0) {
 			System.setProperty("webdriver.chrome.driver", "C:\\browserdrivers\\chromedriver.exe");
 			ChromeDriver driverSwitchChrome = new ChromeDriver();
 			ChromeDriver driverChrome;
 			driverSwitchChrome.get(link);
-			
 			try {
 				while(true)
 					driverSwitchChrome.switchTo().frame(driverSwitchChrome.findElementByClassName("malicious"));
@@ -143,10 +143,7 @@ public class TestingClcikJacking {
 			catch (NoSuchElementException exception2) {
 				result = false;
 			}
-			
-			System.out.println("IE: "+result);
-			results[idAttack] = result;
-			//driverChrome.quit();
+			driverChrome.quit();
 		}
 		else if(browser == 1) {
 			System.setProperty("webdriver.ie.driver", "C:\\browserdrivers\\IEDriverServer.exe");
@@ -165,15 +162,14 @@ public class TestingClcikJacking {
 				System.out.println(driverIE.getPageSource());
 				driverIE.findElementByTagName("style");
 			}
-			catch (NoSuchElementException exception2) {
+			catch (NoSuchElementException | JavascriptException exception2) {
 				result = false;
 			}
-			
-			System.out.println("IE: "+result);
-			results[idAttack] = result;
-			//driverSwitchIE.quit();
+			driverIE.quit();
 		}
-	    return result;
+        System.out.println("IE: "+result);
+		results[idAttack] = result;
+	    return result;//true vulnerable, false not vulnerable
 
 	}
 	
