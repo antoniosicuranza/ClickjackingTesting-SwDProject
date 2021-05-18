@@ -17,7 +17,9 @@ import com.dependability.clickjacking.testing.TestingClcikJacking;
 public class ReferenceClickjackingSites extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public String url;
-    public boolean[] check= {false,false,false,false,false,false,false}; 
+	public boolean[] check= {false,false,false,false,false,false,false}; 
+    public String results; 
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -31,20 +33,19 @@ public class ReferenceClickjackingSites extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		//References ref = new References (url,1);
-		//ref.selectAttack();
-		//request.setAttribute("link", ref.getSrc());
-		//request.getRequestDispatcher(ref.getPage()).forward(request, response);
 		url=request.getParameter("url");
 		System.out.println("url:"+url);
 		for(int i = 0; i<7; i++) {
 			check[i]=request.getParameter(""+i) != null;
-		}
+			}
 		
 		TestingClcikJacking test = new TestingClcikJacking(url, check);
 		test.creationEvnviroment();
-		test.executionTest();
+		results=test.executionTest();
+
+		request.setAttribute("results", results);
+		request.setAttribute("executed", ""+(check[0]&&check[1]? "1":"0")+(check[2]? "1":"0")+(check[3]&&check[4]? "1":"0")+(check[5]? "1":"0")+(check[6]? "1":"0"));
+		request.getRequestDispatcher("result.jsp").forward(request, response);
 	}
 
 	/**
