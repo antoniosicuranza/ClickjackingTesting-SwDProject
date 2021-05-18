@@ -137,7 +137,7 @@ public class TestingClcikJacking {
 				driverChrome = driverSwitchChrome;
 			}
 			try {
-				System.out.println(driverChrome.getPageSource());
+				//System.out.println(driverChrome.getPageSource());
 				driverChrome.findElementByTagName("style");
 			}
 			catch (NoSuchElementException exception2) {
@@ -159,7 +159,7 @@ public class TestingClcikJacking {
 				driverIE = driverSwitchIE;
 			}
 			try {
-				System.out.println(driverIE.getPageSource());
+				//System.out.println(driverIE.getPageSource());
 				driverIE.findElementByTagName("style");
 			}
 			catch (NoSuchElementException | JavascriptException exception2) {
@@ -169,16 +169,17 @@ public class TestingClcikJacking {
 		}
         System.out.println("IE: "+result);
 		results[idAttack] = result;
-	    return result;//true vulnerable, false not vulnerable
+		return result;//true vulnerable, false not vulnerable
 
 	}
 	
-	public void executionTest() throws IOException {
+	public String executionTest() throws IOException {
 		for(int i = 0; i < listAttack.length;i++) {
 			if(listAttack[i]) {
 				test(listClickJacking[i], browser[i], i);
 			}
 		}
+		return ""+(results[0]&&results[1]? "1":"0")+(results[2]? "1":"0")+(results[3]&&results[4]? "1":"0")+(results[5]? "1":"0")+(results[6]? "1":"0");
 	}
 	
 	public void writeCSV() {
