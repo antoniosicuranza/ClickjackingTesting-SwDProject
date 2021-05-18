@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.dependability.clickjacking.reference.References;
-import com.dependability.clickjacking.testing.TestingClcikJacking;
+import com.dependability.clickjacking.testing.TestingClickJacking;
 
 /**
  * Servlet implementation class ReferenceClickjackingSites
@@ -39,7 +39,7 @@ public class ReferenceClickjackingSites extends HttpServlet {
 			check[i]=request.getParameter(""+i) != null;
 			}
 		
-		TestingClcikJacking test = new TestingClcikJacking(url, check);
+		TestingClickJacking test = new TestingClickJacking(url, check);
 		test.creationEvnviroment();
 		results=test.executionTest();
 

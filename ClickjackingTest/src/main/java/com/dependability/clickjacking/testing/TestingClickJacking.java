@@ -21,7 +21,7 @@ import com.dependability.clickjacking.creation.disablingJavascript.DisablingJava
 import com.dependability.clickjacking.creation.onBeforeUnloadEvent.OnBeforeUnloadEvent;
 import com.dependability.clickjacking.creation.redefiningLocation.RedefiningLocation;
 
-public class TestingClcikJacking {
+public class TestingClickJacking {
 	
 	private String url;
 	private boolean[] listAttack;
@@ -30,7 +30,7 @@ public class TestingClcikJacking {
 	private boolean[] results;
 	private static int chrome = 0;
 	private static int internet_explorer = 1;
-	public TestingClcikJacking(String url, boolean[] listAttack) {
+	public TestingClickJacking(String url, boolean[] listAttack) {
 		this.listAttack = listAttack;
 		this.url = url;
 		listClickJacking = new ClickJacking[7];
