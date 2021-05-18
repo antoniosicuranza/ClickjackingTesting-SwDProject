@@ -1,7 +1,10 @@
 package com.dependability.clickjacking.testing;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.NoSuchElementException;
@@ -182,9 +185,37 @@ public class TestingClcikJacking {
 		return ""+(results[0]&&results[1]? "1":"0")+(results[2]? "1":"0")+(results[3]&&results[4]? "1":"0")+(results[5]? "1":"0")+(results[6]? "1":"0");
 	}
 	
-	public void writeCSV() {
-		// srcivere csv che tramite l'idattack fa riferimento al clickjacking giusto e e vede il risultato e scrive un csv file
-	}
+	public String writeCSV() throws IOException {
+		String csv="C:\\Users\\sicur\\git\\ClickjackingTesting-SwDProject\\ClickjackingTest\\src\\main\\webapp\\csv\\test.csv";
+		FileWriter sb = new FileWriter(new File(csv));
+
+		      sb.append("DisablingJavascript");
+		      sb.append(',');
+		      sb.append("DoubleFraming");
+		      sb.append(',');
+		      sb.append("FilterXSS");
+		      sb.append(',');
+		      sb.append("onBeforeUnloadEvent");
+		      sb.append(',');
+		      sb.append("Redefininglocation");
+		      sb.append('\n');
+
+		      if(listAttack[0]) {sb.append((results[0]&&results[1]? "false":"true"));
+		      sb.append(',');}else {sb.append("null,");}
+		      if(listAttack[2]) {sb.append((results[2]? "false":"true"));
+		      sb.append(',');}else {sb.append("null,");}
+		      if(listAttack[3]) {sb.append((results[3]&&results[4]? "false":"true"));
+		      sb.append(',');}else {sb.append("null,");}
+		      if(listAttack[5]) {sb.append((results[5]? "false":"true"));
+		      sb.append(',');}else {sb.append("null,");}
+		      if(listAttack[6]) {sb.append((results[6]? "false":"true"));
+		      sb.append('\n');}else {sb.append("null\n");}
+
+		      sb.flush();
+		      sb.close();
+		      
+		     return csv;
+		  	}
 	
 	public void cleanEnviroment() {
 		for(int i = 0; i < listAttack.length; i++) {
