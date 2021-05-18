@@ -40,7 +40,7 @@ public class ReferenceClickjackingSites extends HttpServlet {
 			}
 		
 		TestingClickJacking test = new TestingClickJacking(url, check);
-		test.creationEvnviroment();
+		test.creationEnvironment();
 		results=test.executionTest();
 
 		request.setAttribute("results", results);

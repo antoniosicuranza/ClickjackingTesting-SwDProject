@@ -54,7 +54,7 @@ public class TestingClickJacking {
 		this.url = url;
 	}
 	
-	public void creationEvnviroment() throws IOException {
+	public void creationEnvironment() throws IOException {
 		for(int i = 0; i < listAttack.length; i++) {
 			if(listAttack[i]) {
 				int idAttack = i;

@@ -8,7 +8,7 @@ public class TestTesting {
 		
 		boolean[] listAttack= {false,true,false,false,false,false,false};
 		TestingClickJacking test = new TestingClickJacking("http://localhost:3000/",listAttack);
-		test.creationEvnviroment();
+		test.creationEnvironment();
 		test.executionTest();
 	}
 
