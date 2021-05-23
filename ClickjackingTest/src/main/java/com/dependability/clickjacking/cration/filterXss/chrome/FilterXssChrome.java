@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import com.dependability.clickjacking.clickInterface.ClickJacking;
+import com.dependability.clickjacking.file.FileCustom;
 
 public class FilterXssChrome implements ClickJacking{
 	private String src;
@@ -14,7 +15,8 @@ public class FilterXssChrome implements ClickJacking{
 	
 	public FilterXssChrome(String src){
 		this.src = src;
-		f = new File("src\\main\\webapp\\html_generated\\filter_xss_chrome.html");
+	    f = (new FileCustom("src\\main\\webapp\\html_generated\\filter_xss_chrome.html")).getFile();
+
 	}
 	
 	@Override
