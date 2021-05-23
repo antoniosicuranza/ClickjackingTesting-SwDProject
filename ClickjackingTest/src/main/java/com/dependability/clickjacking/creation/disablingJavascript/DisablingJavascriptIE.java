@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import com.dependability.clickjacking.clickInterface.ClickJacking;
+import com.dependability.clickjacking.file.FileCustom;
 
 public class DisablingJavascriptIE implements ClickJacking{
 
@@ -15,7 +16,8 @@ public class DisablingJavascriptIE implements ClickJacking{
 	
 	public DisablingJavascriptIE(String src){
 		this.src = src;
-		f = new File("src\\main\\webapp\\html_generated\\disablingJavascriptIEEE.html");
+	    f = (new FileCustom("src\\main\\webapp\\html_generated\\disablingJavascriptIE.html")).getFile();
+
 	}
 	
 	@Override
