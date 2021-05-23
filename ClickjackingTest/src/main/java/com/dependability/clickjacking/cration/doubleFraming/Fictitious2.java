@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import com.dependability.clickjacking.clickInterface.ClickJacking;
+import com.dependability.clickjacking.file.FileCustom;
 
 public class Fictitious2 implements ClickJacking {
 	String src;
@@ -14,7 +15,7 @@ public class Fictitious2 implements ClickJacking {
 
 	public Fictitious2(String src){
 		this.src = src;
-		f = new File("src\\main\\webapp\\html_generated\\fictitious2.html");
+		f = (new FileCustom("src\\main\\webapp\\html_generated\\fictitious2.html")).getFile();
 	}
 	@Override
 	public void creation() throws IOException{
