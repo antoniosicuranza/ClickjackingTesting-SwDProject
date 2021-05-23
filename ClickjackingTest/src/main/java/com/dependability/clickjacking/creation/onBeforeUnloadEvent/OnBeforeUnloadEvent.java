@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import com.dependability.clickjacking.clickInterface.ClickJacking;
+import com.dependability.clickjacking.file.FileCustom;
 
 public class OnBeforeUnloadEvent implements ClickJacking{
 
@@ -15,7 +16,8 @@ public class OnBeforeUnloadEvent implements ClickJacking{
 	
 	public OnBeforeUnloadEvent(String src){
 		this.src = src;
-		f = new File("src\\main\\webapp\\html_generated\\onBeforeUnloadEvent.html");
+	    f = (new FileCustom("src\\main\\webapp\\html_generated\\onBeforeUnloadEvent.html")).getFile();
+
 	}
 	
 	@Override
