@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<style>
+* {
+      font-family: arial; 
+}
+
+</style>
+</head>
+<body>
+
+<div >
+  <div >
+    <h2>Malicius Code</h2>
+    <pre>&lt;iframe src=&quot;http://localhost:3000?param=&lt;script&gt;if&quot;  id=&quot;clickjacking&quot; width=&quot;500&quot; height=&quot;500&quot; scrolling=&quot;no&quot; frameborder=&quot;none&quot; class=&quot;malicious&quot;&gt;&lt;/iframe&gt;</pre>
+  </div>
+  <div>
+    <h2>Malicius page</h2>
+    <iframe src="http://localhost:8080/ClickjackingTest/html_generated/filter_xss_ie.html" height=500px; width=100%></iframe>
+  </div>
+</div>
+
+</body>
+</html>
