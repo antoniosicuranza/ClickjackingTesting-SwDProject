@@ -13,9 +13,9 @@ public class Fictitious1 implements ClickJacking {
 	private String src;
 	private File f;
 	
-	public Fictitious1(String src){
+	public Fictitious1(String src) throws IOException{
 		this.src = src;
-	    f = (new FileCustom("src\\main\\webapp\\html_generated\\fictitious.html")).getFile();
+	    f = (new FileCustom("src/main/webapp/html_generated/fictitious.html")).getFile();
 	    
 	}
 	
