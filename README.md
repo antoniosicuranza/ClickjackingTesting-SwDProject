@@ -1,9 +1,9 @@
 # ClickjackingTesting-SwDProject
 ## Installation
 1. Development Platform - Eclipse
-    - Download Eclipse.
+    - [Download Eclipse](https://www.eclipse.org/downloads/)
 2. Server - Apache Tomcat Server
-    - Download Apache Server.
+    - [Download Apache Tomcat Server](https://tomcat.apache.org/download-90.cgi)
     
 3. Clone the repository and import it to eclipse.
 4. Configure file */WEB-INF/classes/config.properties*.
