@@ -13,9 +13,9 @@ import com.dependability.clickjacking.file.FileCustom;
 public class FilterXssIE implements ClickJacking {
 	private String src;
 	private File f;
-	public FilterXssIE(String src){
+	public FilterXssIE(String src) throws IOException{
 		this.src = src;
-	    f = (new FileCustom("src\\main\\webapp\\html_generated\\filter_xss_ie.html")).getFile();
+	    f = (new FileCustom("src/main/webapp/html_generated/filter_xss_ie.html")).getFile();
 
 	}
 	
