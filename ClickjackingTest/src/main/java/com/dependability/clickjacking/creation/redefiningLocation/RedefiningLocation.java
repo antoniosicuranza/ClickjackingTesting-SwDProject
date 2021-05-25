@@ -14,9 +14,9 @@ public class RedefiningLocation implements ClickJacking{
 	private String src;
 	private File f;
 	
-	public RedefiningLocation(String src){
+	public RedefiningLocation(String src) throws IOException{
 		this.src = src;
-	    f = (new FileCustom("src\\main\\webapp\\html_generated\\redefiningLocation.html")).getFile();
+	    f = (new FileCustom("src/main/webapp/html_generated/redefiningLocation.html")).getFile();
 
 	}
 	
