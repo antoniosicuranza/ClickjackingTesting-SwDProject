@@ -1,19 +1,26 @@
 package com.dependability.clickjacking.file;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 public class FileCustom{
-	String path;
-	File f;
-	public FileCustom(String inProjectPath) {
-		f = new File("C:\\Users\\Valerio\\git\\"
-				+ "ClickjackingTesting-SwDProject\\ClickjackingTest\\" + inProjectPath);
+	private File file;
+	private InputStream iS;
+	private Properties prop;
+	public FileCustom(String inProjectPath) throws IOException {
+		iS = this.getClass().getResourceAsStream("/config.properties");
+		prop = new Properties();
+		prop.load(iS);
+		String pathProject = prop.getProperty("path_project");
+		this.file = new File(pathProject + inProjectPath);
 	}
-	public File getFile() {
-		return this.f;
+	public File getFile(){
+		return this.file;
 	}
-	public void setFile(File f) {
-		this.f = f;
+	public void setFile(File file) {
+		this.file = file;
 	}
 
 }
