@@ -14,9 +14,9 @@ public class DisablingJavascriptChrome implements ClickJacking{
 	private String src;
 	private File f;
 	
-	public DisablingJavascriptChrome(String src){
+	public DisablingJavascriptChrome(String src) throws IOException{
 		this.src = src;
-	    f = (new FileCustom("src\\main\\webapp\\html_generated\\disablingJavascriptChrome.html")).getFile();
+	    f = (new FileCustom("src/main/webapp/html_generated/disablingJavascriptChrome.html")).getFile();
 
 	}
 	
