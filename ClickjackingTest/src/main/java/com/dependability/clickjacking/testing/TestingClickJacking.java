@@ -23,6 +23,7 @@ import com.dependability.clickjacking.creation.filterXss.iE.FilterXssIE;
 import com.dependability.clickjacking.creation.onBeforeUnloadEvent.OnBeforeUnloadEvent;
 import com.dependability.clickjacking.creation.redefiningLocation.RedefiningLocation;
 import com.dependability.clickjacking.file.FileCustom;
+import com.dependability.clickjacking.properties.ManageProperties;
 import com.dependability.connection.TestPageOk;
 import com.dependability.exception.ErrorPage;
 
@@ -125,10 +126,13 @@ public class TestingClickJacking {
 	}
 
 	private boolean test(ClickJacking clickJacking, int browser, int idAttack) throws IOException {
-		
+		ManageProperties mP = new ManageProperties();
+		String pathChromeDriver = mP.retrievingProperty("path_driver_Chrome");
+		String pathExplorerDriver = mP.retrievingProperty("path_driver_IE");
 		boolean result = true;
 		String link = "http://localhost:8080/ClickjackingTest/html_generated/" + clickJacking.getHtmlFile().getName();
 		TestPageOk testPage = new TestPageOk(link, 5);
+		
 		try {
 			System.out.println(testPage.testPageExist());
 		} catch (ErrorPage e) {
@@ -137,7 +141,8 @@ public class TestingClickJacking {
 			testPage.disconnect();
 		}
 		if (browser == 0) {
-			System.setProperty("webdriver.chrome.driver", "C:\\browserdrivers\\chromedriver.exe");
+
+			System.setProperty("webdriver.chrome.driver", pathChromeDriver);
 			ChromeDriver driverSwitchChrome = new ChromeDriver();
 			ChromeDriver driverChrome;
 			driverSwitchChrome.get(link);
@@ -155,7 +160,7 @@ public class TestingClickJacking {
 			}
 			driverChrome.quit();
 		} else if (browser == 1) {
-			System.setProperty("webdriver.ie.driver", "C:\\browserdrivers\\IEDriverServer.exe");
+			System.setProperty("webdriver.ie.driver", pathExplorerDriver);
 			InternetExplorerDriver driverSwitchIE = new InternetExplorerDriver();
 			InternetExplorerDriver driverIE;
 			driverSwitchIE.get(link);
