@@ -1,4 +1,4 @@
-package com.dependability.clickjacking.cration.filterXss.iE;
+package com.dependability.clickjacking.creation.filterXss.iE;
 
 import java.awt.Desktop;
 import java.io.BufferedWriter;

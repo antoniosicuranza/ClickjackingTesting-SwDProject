@@ -1,4 +1,4 @@
-package com.dependability.clickjacking.cration.doubleFraming;
+package com.dependability.clickjacking.creation.doubleFraming;
 
 import java.awt.Desktop;
 import java.io.BufferedWriter;

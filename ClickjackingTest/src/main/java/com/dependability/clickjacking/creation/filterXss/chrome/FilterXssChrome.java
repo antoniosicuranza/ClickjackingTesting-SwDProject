@@ -1,4 +1,4 @@
-package com.dependability.clickjacking.cration.filterXss.chrome;
+package com.dependability.clickjacking.creation.filterXss.chrome;
 
 import java.awt.Desktop;
 import java.io.BufferedWriter;

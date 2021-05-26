@@ -15,11 +15,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
 import com.dependability.clickjacking.clickInterface.ClickJacking;
-import com.dependability.clickjacking.cration.doubleFraming.Fictitious2;
-import com.dependability.clickjacking.cration.filterXss.chrome.FilterXssChrome;
-import com.dependability.clickjacking.cration.filterXss.iE.FilterXssIE;
 import com.dependability.clickjacking.creation.disablingJavascript.DisablingJavascriptChrome;
 import com.dependability.clickjacking.creation.disablingJavascript.DisablingJavascriptIE;
+import com.dependability.clickjacking.creation.doubleFraming.Fictitious2;
+import com.dependability.clickjacking.creation.filterXss.chrome.FilterXssChrome;
+import com.dependability.clickjacking.creation.filterXss.iE.FilterXssIE;
 import com.dependability.clickjacking.creation.onBeforeUnloadEvent.OnBeforeUnloadEvent;
 import com.dependability.clickjacking.creation.redefiningLocation.RedefiningLocation;
 import com.dependability.clickjacking.file.FileCustom;
