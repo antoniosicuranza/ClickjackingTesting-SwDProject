@@ -13,14 +13,37 @@ function selects(){
         if(ele[i].type=='checkbox')  
             ele[i].checked=true;  
     }  
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+	  var checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
+
+	  document.querySelectorAll('input[type="submit"]')[0].disabled = true;
+	  if (checkedOne) {
+	    document.querySelectorAll('input[type="submit"]')[0].disabled = false;
+	  }
 }  
+function callFunction() {
+	  var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+	  var checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
+
+	  document.querySelectorAll('input[type="submit"]')[0].disabled = true;
+	  if (checkedOne) {
+	    document.querySelectorAll('input[type="submit"]')[0].disabled = false;
+	  }
+	}
 function deSelect(){  
     var ele=document.getElementsByClassName('test');  
     for(var i=0; i<ele.length; i++){  
         if(ele[i].type=='checkbox')  
             ele[i].checked=false;  
           
-    }  
+    } 
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+	  var checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
+
+	  document.querySelectorAll('input[type="submit"]')[0].disabled = true;
+	  if (checkedOne) {
+	    document.querySelectorAll('input[type="submit"]')[0].disabled = false;
+	  }
 }
 function change(){
 	var ele=document.getElementById('filterXSS');  
@@ -30,6 +53,13 @@ function change(){
 	}else{
 		ele2.checked=false;
 	}
+	 var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+	  var checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
+
+	  document.querySelectorAll('input[type="submit"]')[0].disabled = true;
+	  if (checkedOne) {
+	    document.querySelectorAll('input[type="submit"]')[0].disabled = false;
+	  }
 }
 function change2(){
 	var ele=document.getElementById('disablingJavascript');  
@@ -39,7 +69,20 @@ function change2(){
 	}else{
 		ele2.checked=false;
 	}
+	 var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+	  var checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
+
+	  document.querySelectorAll('input[type="submit"]')[0].disabled = true;
+	  if (checkedOne) {
+	    document.querySelectorAll('input[type="submit"]')[0].disabled = false;
+	  }
 }
+
+function loading(){
+	var ele=document.getElementById('load');  
+	ele.style.opacity=1;
+}
+
 </script>
 </head>
 <body>
@@ -66,7 +109,7 @@ function change2(){
   			</label>
     
    			<label class="control control-checkbox">
-     			<input type="checkbox" id="doubleFraming" class="test" name="2" value="1"/>   <div class="control_indicator"></div>
+     			<input type="checkbox" id="doubleFraming" class="test" name="2" value="1" onclick="callFunction()"/>   <div class="control_indicator"></div>
         		Double Framing
 		    </label>
     
@@ -76,7 +119,7 @@ function change2(){
     		</label>
   			
 		    <label class="control control-checkbox">
-		      	<input type="checkbox"  id="onBeforeUnloadEvent" class="test" name="5" value="1"/> <div class="control_indicator"></div> 
+		      	<input type="checkbox"  id="onBeforeUnloadEvent" class="test" name="5" value="1" onclick="callFunction()"/> <div class="control_indicator"></div> 
 		       	onBeforeUnload Event
 		    </label>
 		    
@@ -90,9 +133,9 @@ function change2(){
         	
 
     		<p align="center">
-    			<input type="submit"class="button_start"value="Start testing!" />
+    			<input type="submit" class="button_start" value="Start testing!" disabled/>
     		</p>
-   
+   			</div>
 		</div>
 	</form>
 </div>
