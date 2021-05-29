@@ -66,5 +66,8 @@ for(int i=0;i<5;i++){
 	}
 }%>
 </div>
+<p align="center">
+    			<a href="http://localhost:8080/ClickjackingTest/home.jsp" ><button class="button_start" >Home</button></a>
+    		</p>
 </body>
 </html>
