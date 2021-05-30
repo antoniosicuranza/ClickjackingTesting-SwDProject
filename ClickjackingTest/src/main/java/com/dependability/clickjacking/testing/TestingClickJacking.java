@@ -27,6 +27,37 @@ import com.dependability.clickjacking.properties.ManageProperties;
 import com.dependability.connection.TestPageOk;
 import com.dependability.exception.ErrorPage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptException;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+
+import com.dependability.clickjacking.clickInterface.ClickJacking;
+import com.dependability.clickjacking.creation.disablingJavascript.DisablingJavascriptChrome;
+import com.dependability.clickjacking.creation.disablingJavascript.DisablingJavascriptIE;
+import com.dependability.clickjacking.creation.doubleFraming.Fictitious2;
+import com.dependability.clickjacking.creation.filterXss.chrome.FilterXssChrome;
+import com.dependability.clickjacking.creation.filterXss.iE.FilterXssIE;
+import com.dependability.clickjacking.creation.onBeforeUnloadEvent.OnBeforeUnloadEvent;
+import com.dependability.clickjacking.creation.redefiningLocation.RedefiningLocation;
+import com.dependability.clickjacking.file.FileCustom;
+import com.dependability.clickjacking.properties.ManageProperties;
+import com.dependability.connection.TestPageOk;
+import com.dependability.exception.ErrorPage;
+
 public class TestingClickJacking {
 
 	private String url;
@@ -132,7 +163,6 @@ public class TestingClickJacking {
 		boolean result = true;
 		String link = "http://localhost:8080/ClickjackingTest/html_generated/" + clickJacking.getHtmlFile().getName();
 		TestPageOk testPage = new TestPageOk(link, 5);
-		
 		try {
 			System.out.println(testPage.testPageExist());
 		} catch (ErrorPage e) {
@@ -144,25 +174,32 @@ public class TestingClickJacking {
 
 			System.setProperty("webdriver.chrome.driver", pathChromeDriver);
 			ChromeDriver driverSwitchChrome = new ChromeDriver();
+			ChromeDriver driverOriginalSite = new ChromeDriver();
 			ChromeDriver driverChrome;
+			
+			driverOriginalSite.get(clickJacking.getSrc());
 			driverSwitchChrome.get(link);
+			
 			try {
 				while (true)
 					driverSwitchChrome.switchTo().frame(driverSwitchChrome.findElementByClassName("malicious"));
 			} catch (NoSuchElementException exception) {
 				driverChrome = driverSwitchChrome;
 			}
-			try {
-				// System.out.println(driverChrome.getPageSource());
-				driverChrome.findElementByTagName("style");
-			} catch (NoSuchElementException exception2) {
-				result = false;
-			}
+			ArrayList<String> elClickjackingSite = takingHref(driverChrome);
+			ArrayList<String> elOriginalSIte = takingHref(driverOriginalSite);
+			boolean styleClickAttack = takingStyle(driverChrome);
+			boolean styleOriginal = takingStyle(driverOriginalSite);
+			result = comparisonResult(elClickjackingSite, elOriginalSIte, styleClickAttack, styleOriginal);
+			driverOriginalSite.quit();
 			driverChrome.quit();
 		} else if (browser == 1) {
 			System.setProperty("webdriver.ie.driver", pathExplorerDriver);
 			InternetExplorerDriver driverSwitchIE = new InternetExplorerDriver();
 			InternetExplorerDriver driverIE;
+			InternetExplorerDriver driverOriginalSite = new InternetExplorerDriver();
+			
+			driverOriginalSite.get(clickJacking.getSrc());
 			driverSwitchIE.get(link);
 
 			try {
@@ -171,17 +208,89 @@ public class TestingClickJacking {
 			} catch (NoSuchElementException exception) {
 				driverIE = driverSwitchIE;
 			}
-			try {
-				// System.out.println(driverIE.getPageSource());
-				driverIE.findElementByTagName("style");
-			} catch (NoSuchElementException | JavascriptException exception2) {
-				result = false;
-			}
+			ArrayList<String> elClickjackingSite = takingHref(driverIE);
+			ArrayList<String> elOriginalSIte = takingHref(driverOriginalSite);
+			boolean styleClickAttack = takingStyle(driverIE);
+			boolean styleOriginal = takingStyle(driverOriginalSite);
+			result = comparisonResult(elClickjackingSite, elOriginalSIte, styleClickAttack, styleOriginal);
+			driverOriginalSite.quit();
 			driverIE.quit();
 		}
 		System.out.println("result: " + result);
 		results[idAttack] = result;
 		return result;// true vulnerable, false not vulnerable
+
+	}
+	public ArrayList<String> takingHref(WebDriver driver) {
+		List<WebElement> el = new ArrayList<WebElement>();
+		ArrayList<String> elResult = new ArrayList<String>();
+		boolean href = true;
+		try {
+			el =  driver.findElements(By.xpath("//*[@href]"));
+		}catch(NoSuchElementException exception){
+			href = false;
+			System.out.println("there aren't href in the site");
+		}
+		if(href) {
+			System.out.println("href ");
+			for ( WebElement e : el ) {
+				if(e.getAttribute("rel").equalsIgnoreCase("stylesheet")) {
+					System.out.println("link "+e.getAttribute("href"));
+					elResult.add(e.getAttribute("href"));
+				}		  
+			}
+		}
+		return elResult;
+	}
+	
+	public boolean takingStyle(WebDriver driver) {
+		boolean result = true;
+		String nameDriver = driver.getClass().getSimpleName();
+		if(nameDriver.equals("ChromeDriver")) {
+			ChromeDriver driverChrome = (ChromeDriver) driver;
+			try {
+				driverChrome.findElementByTagName("style");	
+			}catch(NoSuchElementException exception){
+				result = false;
+				System.out.println("there aren't style in the site");
+			}
+		}
+		if(nameDriver.equals("InternetExplorerDriver")) {
+			InternetExplorerDriver driverIE = (InternetExplorerDriver) driver;
+			try {
+				driverIE.findElementByTagName("style");	
+			}catch(NoSuchElementException exception){
+				result = false;
+				System.out.println("there aren't style in the site");
+			}
+		}
+		return result;
+	}
+	
+	public boolean comparisonResult(ArrayList<String> elClickjackingSite, ArrayList<String> elOriginalSIte,
+		boolean styleClickAttack, boolean styleOriginal) {
+		
+		boolean resultStyle = false;
+		boolean resultHref = true;
+		if(styleClickAttack==styleOriginal)
+			resultStyle = true;
+		if(elOriginalSIte.size()==elClickjackingSite.size()) {
+			for ( String s : elClickjackingSite ) {
+				if(!elOriginalSIte.contains(s)) {
+					resultHref = false;
+					break;
+				}
+			}	
+		}
+		else {
+			resultHref = false;
+		}
+		System.out.println("result style: " + resultStyle);
+		System.out.println("result href: " + resultHref);
+		if(resultStyle && resultHref)
+			return true;
+		else
+			return false;
 
 	}
 
@@ -265,3 +374,4 @@ public class TestingClickJacking {
 	}
 
 }
+
