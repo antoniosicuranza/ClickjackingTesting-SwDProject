@@ -224,21 +224,39 @@ public class TestingClickJacking {
 	public ArrayList<String> takingHref(WebDriver driver) {
 		List<WebElement> el = new ArrayList<WebElement>();
 		ArrayList<String> elResult = new ArrayList<String>();
-		boolean href = true;
-		try {
-			el =  driver.findElements(By.xpath("//*[@href]"));
-		}catch(NoSuchElementException exception){
-			href = false;
-			System.out.println("there aren't href in the site");
-		}
-		if(href) {
-			System.out.println("href ");
-			for ( WebElement e : el ) {
-				if(e.getAttribute("rel").equalsIgnoreCase("stylesheet")) {
-					System.out.println("link "+e.getAttribute("href"));
-					elResult.add(e.getAttribute("href"));
-				}		  
+		String nameDriver = driver.getClass().getSimpleName();
+
+		if (nameDriver.equals("ChromeDriver")) {
+			ChromeDriver driverChrome = (ChromeDriver) driver;
+			try {
+				el = driverChrome.findElementsByTagName("link");
+				System.out.println("href ");
+				for (WebElement e : el) {
+					if (e.getAttribute("rel").equalsIgnoreCase("stylesheet")) {
+						System.out.println("link " + e.getAttribute("href"));
+						elResult.add(e.getAttribute("href"));
+					}
+				}
+			} catch (NoSuchElementException | NullPointerException exception) {
+				System.out.println("there aren't href in the site");
 			}
+
+		}
+		if (nameDriver.equals("InternetExplorerDriver")) {
+			InternetExplorerDriver driverIE = (InternetExplorerDriver) driver;
+			try {
+				el = driverIE.findElementsByTagName("link");
+				System.out.println("href ");
+				for (WebElement e : el) {
+					if (e.getAttribute("rel").equalsIgnoreCase("stylesheet")) {
+						System.out.println("link explorer" + e.getAttribute("href"));
+						elResult.add(e.getAttribute("href"));
+					}
+				}
+			} catch (NoSuchElementException exception) {
+				System.out.println("there aren't href in the site");
+			}
+
 		}
 		return elResult;
 	}
@@ -271,16 +289,12 @@ public class TestingClickJacking {
 		boolean styleClickAttack, boolean styleOriginal) {
 		
 		boolean resultStyle = false;
-		boolean resultHref = true;
+		boolean resultHref = false;
 		if(styleClickAttack==styleOriginal)
 			resultStyle = true;
 		if(elOriginalSIte.size()==elClickjackingSite.size()) {
-			for ( String s : elClickjackingSite ) {
-				if(!elOriginalSIte.contains(s)) {
-					resultHref = false;
-					break;
-				}
-			}	
+		 resultHref = true;
+
 		}
 		else {
 			resultHref = false;
