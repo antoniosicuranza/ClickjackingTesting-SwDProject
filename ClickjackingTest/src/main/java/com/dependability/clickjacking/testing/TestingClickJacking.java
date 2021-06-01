@@ -163,6 +163,8 @@ public class TestingClickJacking {
 		boolean result = true;
 		String link = "http://localhost:8080/ClickjackingTest/html_generated/" + clickJacking.getHtmlFile().getName();
 		TestPageOk testPage = new TestPageOk(link, 5);
+		System.setProperty("webdriver.chrome.driver", pathChromeDriver);
+		ChromeDriver driverOriginalSite = new ChromeDriver();
 		try {
 			System.out.println(testPage.testPageExist());
 		} catch (ErrorPage e) {
@@ -174,7 +176,6 @@ public class TestingClickJacking {
 
 			System.setProperty("webdriver.chrome.driver", pathChromeDriver);
 			ChromeDriver driverSwitchChrome = new ChromeDriver();
-			ChromeDriver driverOriginalSite = new ChromeDriver();
 			ChromeDriver driverChrome;
 			
 			driverOriginalSite.get(clickJacking.getSrc());
@@ -197,7 +198,6 @@ public class TestingClickJacking {
 			System.setProperty("webdriver.ie.driver", pathExplorerDriver);
 			InternetExplorerDriver driverSwitchIE = new InternetExplorerDriver();
 			InternetExplorerDriver driverIE;
-			InternetExplorerDriver driverOriginalSite = new InternetExplorerDriver();
 			
 			driverOriginalSite.get(clickJacking.getSrc());
 			driverSwitchIE.get(link);
