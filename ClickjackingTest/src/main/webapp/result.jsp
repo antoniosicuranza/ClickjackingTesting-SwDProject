@@ -39,9 +39,9 @@ body {
 <%
 String result=(String)request.getAttribute("results");
 String executed=(String)request.getAttribute("executed");
-String[] testMethods={"Disabling Javascript","Double Framing","Filter XSS","onBeforeUnloadEvent","RedefiningLocation"};
+String[] testMethods={"Disabling Javascript Chrome","Disabling Javascript IE","Double Framing","Filter XSS Chrome","Filter XSS IE","onBeforeUnloadEvent","RedefiningLocation"};
 String[] link={"disablinkjavascriptChrome","fictitius","filter_xss_chrome","onBeforeUnloadEvent","disablinkjavascriptIE","filter_xss_ie"};
-for(int i=0;i<5;i++){
+for(int i=0;i<6;i++){
 	if(executed.charAt(i)=='1'){
 		%>
   
@@ -52,14 +52,6 @@ for(int i=0;i<5;i++){
       
       <%if(result.charAt(i)=='1') {%>
      <p> <a href="http://localhost:8080/ClickjackingTest/result/result_<%out.println(link[i]);%>.html" target="_blank" rel="noopener noreferrer"><button class="button_start" >Show</button></a></p>
-      
-       <%if(i==0) {%>
-     <p> <a href="http://localhost:8080/ClickjackingTest/result/result_<%out.println(link[i+4]);%>.html" target="_blank" rel="noopener noreferrer"><button class="button_start" >Show IE</button></a></p>
-      <%} %>
-       <%if(i==2) {%>
-     <p> <a href="http://localhost:8080/ClickjackingTest/result/result_<%out.println(link[i+3]);%>.html" target="_blank" rel="noopener noreferrer"><button class="button_start" >Show IE</button></a></p>
-      <%} %>
-      
       <%} %>
     </div>  
   <%

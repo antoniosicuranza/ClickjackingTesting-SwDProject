@@ -45,7 +45,7 @@ public class ReferenceClickjackingSites extends HttpServlet {
 
 		request.setAttribute("results", results);
 		request.setAttribute("csv", test.writeCSV());
-		request.setAttribute("executed", ""+(check[0]&&check[1]? "1":"0")+(check[2]? "1":"0")+(check[3]&&check[4]? "1":"0")+(check[5]? "1":"0")+(check[6]? "1":"0"));
+		request.setAttribute("executed", ""+(check[0]? "1":"0")+(check[1]? "1":"0")+(check[2]? "1":"0")+(check[3]? "1":"0")+(check[4]? "1":"0")+(check[5]? "1":"0")+(check[6]? "1":"0"));
 		request.getRequestDispatcher("result.jsp").forward(request, response);
 	}
 

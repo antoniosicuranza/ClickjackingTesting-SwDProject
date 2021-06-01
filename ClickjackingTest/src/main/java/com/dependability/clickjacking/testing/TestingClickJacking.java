@@ -314,8 +314,8 @@ public class TestingClickJacking {
 				test(listClickJacking[i], browser[i], i);
 			}
 		}
-		return "" + (results[0] && results[1] ? "1" : "0") + (results[2] ? "1" : "0")
-				+ (results[3] && results[4] ? "1" : "0") + (results[5] ? "1" : "0") + (results[6] ? "1" : "0");
+		return "" + (results[0] ? "1" : "0") + (results[1] ? "1" : "0")+ (results[2] ? "1" : "0")
+				+ (results[3]  ? "1" : "0") + (results[4] ? "1" : "0")+ (results[5] ? "1" : "0") + (results[6] ? "1" : "0");
 	}
 
 	public String writeCSV() throws IOException {
