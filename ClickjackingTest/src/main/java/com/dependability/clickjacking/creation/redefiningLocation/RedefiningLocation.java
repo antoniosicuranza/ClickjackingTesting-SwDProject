@@ -57,7 +57,7 @@ public class RedefiningLocation implements ClickJacking{
         bw.write("<script>\r\n"
         		+ "	    var location = \"dummy\";\r\n"
         		+ "	</script>\r\n");
-        bw.write("	<iframe src=\""+src+"\" id=\"clickjacking\" width=\"500\" height=\"500\" scrolling=\"no\" frameborder=\"none\"  class=\"malicious\"></iframe>");
+        bw.write("	<iframe src=\""+src+"\" id=\"clickjacking\"  class=\"malicious\"></iframe>");
         bw.write("</body></html>");
         bw.close();		
 	}

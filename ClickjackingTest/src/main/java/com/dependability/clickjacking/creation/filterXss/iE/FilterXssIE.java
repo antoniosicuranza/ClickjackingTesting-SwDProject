@@ -57,7 +57,7 @@ public class FilterXssIE implements ClickJacking {
         		+ "            <form action=\"http://www.owasp.com\">\r\n"
         		+ "                <input type=\"submit\" class=\"button\" value=\"Click and go!\">\r\n"
         		+ "            </form>");
-	    bw.write("<iframe src=\"" + src + "?param=<script>if\"" + "  id=\"clickjacking\" width=\"500\" height=\"500\" scrolling=\"no\" frameborder=\"none\" class=\"malicious\"></iframe>");
+	    bw.write("<iframe src=\"" + src + "?param=<script>if\"" + "  id=\"clickjacking\"  class=\"malicious\"></iframe>");
 	    bw.write("</body></html>");
 	    bw.close();		
 	}

@@ -67,7 +67,7 @@ public class OnBeforeUnloadEvent implements ClickJacking{
         		+ "		            }\r\n"
         		+ "		        }, 1);\r\n"
         		+ "		</script>");
-	    bw.write("<iframe src=\""+src+"\"  id=\"clickjacking\" width=\"500\" height=\"500\" scrolling=\"no\" frameborder=\"none\" class=\"malicious\"></iframe>");
+	    bw.write("<iframe src=\""+src+"\"  id=\"clickjacking\"  class=\"malicious\"></iframe>");
         bw.write("</body></html>");
         bw.close();		
 	}

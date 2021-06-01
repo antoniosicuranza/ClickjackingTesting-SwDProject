@@ -54,7 +54,7 @@ public class DisablingJavascriptIE implements ClickJacking{
         		+ "            <form action=\"http://www.owasp.com\">\r\n"
         		+ "                <input type=\"submit\" class=\"button\" value=\"Click and go!\">\r\n"
         		+ "            </form>");
-        bw.write("<iframe src=\""+src+"\"  id=\"clickjacking\" width=\"500\" height=\"500\" scrolling=\"no\" frameborder=\"none\" security=\"restricted\" class=\"malicious\"></iframe>");
+        bw.write("<iframe src=\""+src+"\"  id=\"clickjacking\" security=\"restricted\" class=\"malicious\"></iframe>");
         bw.write("</body></html>");
         bw.close();		
 	}
