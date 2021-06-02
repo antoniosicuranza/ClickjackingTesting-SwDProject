@@ -39,7 +39,7 @@ body {
 <%
 String result=(String)request.getAttribute("results");
 String executed=(String)request.getAttribute("executed");
-String[] testMethods={"Disabling Javascript Chrome","Disabling Javascript IE","Double Framing","Filter XSS Chrome","Filter XSS IE","onBeforeUnloadEvent","RedefiningLocation"};
+String[] testMethods={"Disabling Javascript","Disabling Javascript IE","Double Framing","Filter XSS Chrome","Filter XSS IE","onBeforeUnloadEvent","RedefiningLocation"};
 String[] link={"disablinkjavascriptChrome","disablinkjavascriptIE","fictitius","filter_xss_chrome","filter_xss_ie","onBeforeUnloadEvent"};
 for(int i=0;i<6;i++){
 	if(executed.charAt(i)=='1'){

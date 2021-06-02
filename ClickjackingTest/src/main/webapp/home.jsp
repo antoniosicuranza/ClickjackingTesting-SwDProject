@@ -45,7 +45,7 @@ function deSelect(){
 	    document.querySelectorAll('input[type="submit"]')[0].disabled = false;
 	  }
 }
-function change(){
+ function change(){
 	var ele=document.getElementById('filterXSS');  
 	var ele2=document.getElementById('extra');
 	if(ele.checked==true){
@@ -61,27 +61,7 @@ function change(){
 	    document.querySelectorAll('input[type="submit"]')[0].disabled = false;
 	  }
 }
-function change2(){
-	var ele=document.getElementById('disablingJavascript');  
-	var ele2=document.getElementById('extra2');
-	if(ele.checked==true){
-		ele2.checked=true;
-	}else{
-		ele2.checked=false;
-	}
-	 var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-	  var checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
 
-	  document.querySelectorAll('input[type="submit"]')[0].disabled = true;
-	  if (checkedOne) {
-	    document.querySelectorAll('input[type="submit"]')[0].disabled = false;
-	  }
-}
-
-function loading(){
-	var ele=document.getElementById('load');  
-	ele.style.opacity=1;
-}
 
 </script>
 </head>
@@ -104,7 +84,7 @@ function loading(){
   			<input type="button" class="button_all" onclick='deSelect()' value="Deselect All"/>  
   			 
    			<label class="control control-checkbox" style="margin-top:3%;">
-       			<input type="checkbox" id="disablingJavascript" class="test" name="0" value="1" onclick="change2()"/><div class="control_indicator"></div>
+       			<input type="checkbox" id="disablingJavascript" class="test" name="0" value="1" onclick="callFunction()"/><div class="control_indicator"></div>
       			Disabling Javascript         
   			</label>
     
@@ -128,10 +108,9 @@ function loading(){
 		        Redefining Location
 		    </label>
 		    
-        		<input type="checkbox" id="extra" class="test" name="4" value="1" style="opacity:0%;"  />
-        		<input type="checkbox" id="extra2"  class="test" name="1" value="1" style="opacity:0%;"/>
-        	
-
+        		 <input type="checkbox" id="extra" class="test" name="4" value="1" style="opacity:0%;"  />
+        	<!-- <input type="checkbox" id="extra2"  class="test" name="1" value="1" style="opacity:0%;"/>-->
+       	
     		<p align="center">
     			<input type="submit" class="button_start" value="Start testing!" disabled/>
     		</p>
