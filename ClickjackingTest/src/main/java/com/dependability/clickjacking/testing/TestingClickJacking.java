@@ -225,38 +225,58 @@ public class TestingClickJacking {
 		List<WebElement> el = new ArrayList<WebElement>();
 		ArrayList<String> elResult = new ArrayList<String>();
 		String nameDriver = driver.getClass().getSimpleName();
-
+		boolean existLink = true;
+		
 		if (nameDriver.equals("ChromeDriver")) {
 			ChromeDriver driverChrome = (ChromeDriver) driver;
+			
 			try {
 				el = driverChrome.findElementsByTagName("link");
-				System.out.println("href ");
-				for (WebElement e : el) {
-					if (e.getAttribute("rel").equalsIgnoreCase("stylesheet")) {
-						System.out.println("link " + e.getAttribute("href"));
-						elResult.add(e.getAttribute("href"));
-					}
-				}
-			} catch (NoSuchElementException | NullPointerException exception) {
-				System.out.println("there aren't href in the site");
+			}catch(NoSuchElementException exception){
+				existLink = false;
+				System.out.println("there aren't link in the site");
 			}
-
 		}
-		if (nameDriver.equals("InternetExplorerDriver")) {
+
+		else if (nameDriver.equals("InternetExplorerDriver")) {
 			InternetExplorerDriver driverIE = (InternetExplorerDriver) driver;
+			
 			try {
 				el = driverIE.findElementsByTagName("link");
-				System.out.println("href ");
-				for (WebElement e : el) {
+			}catch(NoSuchElementException exception){
+				existLink = false;
+				System.out.println("there aren't link in the site");
+			}
+		}
+			
+		if(existLink) {
+			for (WebElement e : el) {
+				
+				boolean existRel = true;
+				boolean existHref = true;
+				
+				try {
+					e.getAttribute("rel");
+				}catch(NullPointerException exception) {
+					System.out.println("there isn't rel attribute in this link");
+					existRel = false;
+				}
+				
+				if(existRel) {
 					if (e.getAttribute("rel").equalsIgnoreCase("stylesheet")) {
-						System.out.println("link explorer" + e.getAttribute("href"));
-						elResult.add(e.getAttribute("href"));
+						try {
+							e.getAttribute("href");
+						}catch(NullPointerException exception) {
+							System.out.println("there isn't href attribute in this link");
+							existHref = false;
+						}
+						if(existHref) {
+							System.out.println("href " + e.getAttribute("href"));
+							elResult.add(e.getAttribute("href"));
+						}
 					}
 				}
-			} catch (NoSuchElementException exception) {
-				System.out.println("there aren't href in the site");
 			}
-
 		}
 		return elResult;
 	}
