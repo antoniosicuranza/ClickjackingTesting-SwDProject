@@ -65,7 +65,7 @@ function deSelect(){
 
 </script>
 </head>
-<body>
+<body onload="callFunction()">
 <div align="center" style="margin-top:3%;"><img alt="Clickjacking test" src="images/logo.jpg"height=25% width=25% align="top" >
 </div>
 <div style="margin-top:3%;">
