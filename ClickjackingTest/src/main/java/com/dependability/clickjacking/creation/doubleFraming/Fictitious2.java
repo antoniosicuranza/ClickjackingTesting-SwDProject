@@ -25,7 +25,7 @@ public class Fictitious2 implements ClickJacking {
 		fictitious.creation();
         BufferedWriter bw = new BufferedWriter(new FileWriter(f));
         bw.write("<html><head>\r\n"
-        		+ "<link rel=\"stylesheet\" href=\"opacity.css\">\r\n"
+        		+ "<link rel=\"stylesheet\" href=\"CSS/opacity.css\">\r\n"
         		+ "    </head>\r\n"
         		+ "    <body>\r\n"
         		+ "        <div id=\"content\">\r\n"
