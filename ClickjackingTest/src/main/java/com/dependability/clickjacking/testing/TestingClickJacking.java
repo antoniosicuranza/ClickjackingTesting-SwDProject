@@ -195,7 +195,7 @@ public class TestingClickJacking {
 				boolean styleOriginal = takingStyle(driverOriginalSite);
 				result = comparisonResult(elClickjackingSite, elOriginalSite, styleClickAttack, styleOriginal);
 				driverOriginalSite.quit();
-//driverChrome.quit();
+				driverChrome.quit();
 			} else if (browser == 1) {
 				System.setProperty("webdriver.ie.driver", pathExplorerDriver);
 				InternetExplorerDriver driverSwitchIE = new InternetExplorerDriver();
