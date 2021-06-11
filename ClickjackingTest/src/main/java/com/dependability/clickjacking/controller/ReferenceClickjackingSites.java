@@ -15,6 +15,7 @@ import com.dependability.clickjacking.testing.TestingClickJacking;
  */
 @WebServlet("/ReferenceClickjackingSites")
 public class ReferenceClickjackingSites extends HttpServlet {
+	private TestingClickJacking test;
 	private static final long serialVersionUID = 1L;
 	public String url;
 	public boolean[] check= {false,false,false,false,false,false,false}; 
@@ -31,22 +32,29 @@ public class ReferenceClickjackingSites extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		url=request.getParameter("url");
-		System.out.println("url:"+url);
-		for(int i = 0; i<7; i++) {
-			check[i]=request.getParameter(""+i) != null;
-			}
-		
+		url = request.getParameter("url");
+		System.out.println("url:" + url);
+		for (int i = 0; i < 7; i++) {
+			check[i] = request.getParameter("" + i) != null;
+		}
+
 		TestingClickJacking test = new TestingClickJacking(url, check);
 		test.creationEnvironment();
-		results=test.executionTest();
-
-		request.setAttribute("results", results);
-		request.setAttribute("csv", test.writeCSV());
-		request.setAttribute("executed", ""+(check[0]? "1":"0")+(check[1]? "1":"0")+(check[2]? "1":"0")+(check[3]? "1":"0")+(check[4]? "1":"0")+(check[5]? "1":"0")+(check[6]? "1":"0"));
-		request.getRequestDispatcher("result.jsp").forward(request, response);
+		results = test.executionTest();
+		if (!test.getFailConnection()) {
+			request.setAttribute("results", results);
+			request.setAttribute("csv", test.writeCSV());
+			request.setAttribute("executed",
+					"" + (check[0] ? "1" : "0") + (check[1] ? "1" : "0") + (check[2] ? "1" : "0")
+							+ (check[3] ? "1" : "0") + (check[4] ? "1" : "0") + (check[5] ? "1" : "0")
+							+ (check[6] ? "1" : "0"));
+			request.getRequestDispatcher("result.jsp").forward(request, response);
+		} else {
+		    response.sendError(HttpServletResponse.SC_NOT_FOUND);
+		}
 	}
 
 	/**
@@ -56,6 +64,10 @@ public class ReferenceClickjackingSites extends HttpServlet {
 		// TODO Auto-generated method stub
 				doGet(request,response);
 	}
+	
+	public void destroy() {
+		test.cleanEnviroment();
+    }
 	
 
 }
