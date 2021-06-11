@@ -18,8 +18,8 @@ import com.dependability.clickjacking.clickInterface.ClickJacking;
 import com.dependability.clickjacking.creation.disablingJavascript.DisablingJavascriptChrome;
 import com.dependability.clickjacking.creation.disablingJavascript.DisablingJavascriptIE;
 import com.dependability.clickjacking.creation.doubleFraming.Fictitious2;
-import com.dependability.clickjacking.creation.filterXss.chrome.FilterXssChrome;
-import com.dependability.clickjacking.creation.filterXss.iE.FilterXssIE;
+import com.dependability.clickjacking.creation.filterXss.FilterXssChrome;
+import com.dependability.clickjacking.creation.filterXss.FilterXssIE;
 import com.dependability.clickjacking.creation.onBeforeUnloadEvent.OnBeforeUnloadEvent;
 import com.dependability.clickjacking.creation.redefiningLocation.RedefiningLocation;
 import com.dependability.clickjacking.file.FileCustom;
@@ -49,8 +49,6 @@ import com.dependability.clickjacking.clickInterface.ClickJacking;
 import com.dependability.clickjacking.creation.disablingJavascript.DisablingJavascriptChrome;
 import com.dependability.clickjacking.creation.disablingJavascript.DisablingJavascriptIE;
 import com.dependability.clickjacking.creation.doubleFraming.Fictitious2;
-import com.dependability.clickjacking.creation.filterXss.chrome.FilterXssChrome;
-import com.dependability.clickjacking.creation.filterXss.iE.FilterXssIE;
 import com.dependability.clickjacking.creation.onBeforeUnloadEvent.OnBeforeUnloadEvent;
 import com.dependability.clickjacking.creation.redefiningLocation.RedefiningLocation;
 import com.dependability.clickjacking.file.FileCustom;
@@ -67,6 +65,7 @@ public class TestingClickJacking {
 	private boolean[] results;
 	private static int chrome = 0;
 	private static int internet_explorer = 1;
+	private boolean failConnection;
 
 	public TestingClickJacking(String url, boolean[] listAttack) {
 		this.listAttack = listAttack;
@@ -74,6 +73,7 @@ public class TestingClickJacking {
 		listClickJacking = new ClickJacking[7];
 		browser = new int[7];
 		results = new boolean[7];
+		failConnection = false;
 	}
 
 	public boolean[] getAttack() {
@@ -156,7 +156,7 @@ public class TestingClickJacking {
 		}
 	}
 
-	private boolean test(ClickJacking clickJacking, int browser, int idAttack) throws IOException {
+	public boolean test(ClickJacking clickJacking, int browser, int idAttack) throws IOException {
 		ManageProperties mP = new ManageProperties();
 		String pathChromeDriver = mP.retrievingProperty("path_driver_Chrome");
 		String pathExplorerDriver = mP.retrievingProperty("path_driver_IE");
@@ -169,70 +169,73 @@ public class TestingClickJacking {
 			System.out.println(testPage.testPageExist());
 		} catch (ErrorPage e) {
 			System.out.println(e.getMessage());
+			this.failConnection = true;
 		} finally {
 			testPage.disconnect();
 		}
-		if (browser == 0) {
+		if (!failConnection) {
+			if (browser == 0) {
 
-			System.setProperty("webdriver.chrome.driver", pathChromeDriver);
-			ChromeDriver driverSwitchChrome = new ChromeDriver();
-			ChromeDriver driverChrome;
-			
-			driverOriginalSite.get(clickJacking.getSrc());
-			driverSwitchChrome.get(link);
-			
-			try {
-				while (true)
-					driverSwitchChrome.switchTo().frame(driverSwitchChrome.findElementByClassName("malicious"));
-			} catch (NoSuchElementException exception) {
-				driverChrome = driverSwitchChrome;
-			}
-			ArrayList<String> elClickjackingSite = takingHref(driverChrome);
-			ArrayList<String> elOriginalSIte = takingHref(driverOriginalSite);
-			boolean styleClickAttack = takingStyle(driverChrome);
-			boolean styleOriginal = takingStyle(driverOriginalSite);
-			result = comparisonResult(elClickjackingSite, elOriginalSIte, styleClickAttack, styleOriginal);
-			driverOriginalSite.quit();
-			driverChrome.quit();
-		} else if (browser == 1) {
-			System.setProperty("webdriver.ie.driver", pathExplorerDriver);
-			InternetExplorerDriver driverSwitchIE = new InternetExplorerDriver();
-			InternetExplorerDriver driverIE;
-			
-			driverOriginalSite.get(clickJacking.getSrc());
-			driverSwitchIE.get(link);
+				System.setProperty("webdriver.chrome.driver", pathChromeDriver);
+				ChromeDriver driverSwitchChrome = new ChromeDriver();
+				ChromeDriver driverChrome;
 
-			try {
-				while (true)
-					driverSwitchIE.switchTo().frame(driverSwitchIE.findElementByClassName("malicious"));
-			} catch (NoSuchElementException exception) {
-				driverIE = driverSwitchIE;
+				driverOriginalSite.get(clickJacking.getSrc());
+				driverSwitchChrome.get(link);
+
+				try {
+					while (true)
+						driverSwitchChrome.switchTo().frame(driverSwitchChrome.findElementByClassName("malicious"));
+				} catch (NoSuchElementException exception) {
+					driverChrome = driverSwitchChrome;
+				}
+				ArrayList<String> elClickjackingSite = takingHref(driverChrome);
+				ArrayList<String> elOriginalSite = takingHref(driverOriginalSite);
+				boolean styleClickAttack = takingStyle(driverChrome);
+				boolean styleOriginal = takingStyle(driverOriginalSite);
+				result = comparisonResult(elClickjackingSite, elOriginalSite, styleClickAttack, styleOriginal);
+				driverOriginalSite.quit();
+//driverChrome.quit();
+			} else if (browser == 1) {
+				System.setProperty("webdriver.ie.driver", pathExplorerDriver);
+				InternetExplorerDriver driverSwitchIE = new InternetExplorerDriver();
+				InternetExplorerDriver driverIE;
+
+				driverOriginalSite.get(clickJacking.getSrc());
+				driverSwitchIE.get(link);
+
+				try {
+					while (true)
+						driverSwitchIE.switchTo().frame(driverSwitchIE.findElementByClassName("malicious"));
+				} catch (NoSuchElementException exception) {
+					driverIE = driverSwitchIE;
+				}
+				ArrayList<String> elClickjackingSite = takingHref(driverIE);
+				ArrayList<String> elOriginalSIte = takingHref(driverOriginalSite);
+				boolean styleClickAttack = takingStyle(driverIE);
+				boolean styleOriginal = takingStyle(driverOriginalSite);
+				result = comparisonResult(elClickjackingSite, elOriginalSIte, styleClickAttack, styleOriginal);
+				driverOriginalSite.quit();
+				driverIE.quit();
 			}
-			ArrayList<String> elClickjackingSite = takingHref(driverIE);
-			ArrayList<String> elOriginalSIte = takingHref(driverOriginalSite);
-			boolean styleClickAttack = takingStyle(driverIE);
-			boolean styleOriginal = takingStyle(driverOriginalSite);
-			result = comparisonResult(elClickjackingSite, elOriginalSIte, styleClickAttack, styleOriginal);
-			driverOriginalSite.quit();
-			driverIE.quit();
+			System.out.println("result: " + result);
+			results[idAttack] = result;
 		}
-		System.out.println("result: " + result);
-		results[idAttack] = result;
-		return result;// true vulnerable, false not vulnerable
-
+		return failConnection;
 	}
+
 	public ArrayList<String> takingHref(WebDriver driver) {
 		List<WebElement> el = new ArrayList<WebElement>();
 		ArrayList<String> elResult = new ArrayList<String>();
 		String nameDriver = driver.getClass().getSimpleName();
 		boolean existLink = true;
-		
+
 		if (nameDriver.equals("ChromeDriver")) {
 			ChromeDriver driverChrome = (ChromeDriver) driver;
-			
+
 			try {
 				el = driverChrome.findElementsByTagName("link");
-			}catch(NoSuchElementException exception){
+			} catch (NoSuchElementException exception) {
 				existLink = false;
 				System.out.println("there aren't link in the site");
 			}
@@ -240,37 +243,37 @@ public class TestingClickJacking {
 
 		else if (nameDriver.equals("InternetExplorerDriver")) {
 			InternetExplorerDriver driverIE = (InternetExplorerDriver) driver;
-			
+
 			try {
 				el = driverIE.findElementsByTagName("link");
-			}catch(NoSuchElementException exception){
+			} catch (NoSuchElementException exception) {
 				existLink = false;
 				System.out.println("there aren't link in the site");
 			}
 		}
-			
-		if(existLink) {
+
+		if (existLink) {
 			for (WebElement e : el) {
-				
+
 				boolean existRel = true;
 				boolean existHref = true;
-				
+
 				try {
 					e.getAttribute("rel");
-				}catch(NullPointerException exception) {
+				} catch (NullPointerException exception) {
 					System.out.println("there isn't rel attribute in this link");
 					existRel = false;
 				}
-				
-				if(existRel) {
+
+				if (existRel) {
 					if (e.getAttribute("rel").equalsIgnoreCase("stylesheet")) {
 						try {
 							e.getAttribute("href");
-						}catch(NullPointerException exception) {
+						} catch (NullPointerException exception) {
 							System.out.println("there isn't href attribute in this link");
 							existHref = false;
 						}
-						if(existHref) {
+						if (existHref) {
 							System.out.println("href " + e.getAttribute("href"));
 							elResult.add(e.getAttribute("href"));
 						}
@@ -280,48 +283,48 @@ public class TestingClickJacking {
 		}
 		return elResult;
 	}
-	
+
 	public boolean takingStyle(WebDriver driver) {
 		boolean result = true;
 		String nameDriver = driver.getClass().getSimpleName();
-		if(nameDriver.equals("ChromeDriver")) {
+		if (nameDriver.equals("ChromeDriver")) {
 			ChromeDriver driverChrome = (ChromeDriver) driver;
+			System.out.println(driverChrome.getPageSource());
 			try {
-				driverChrome.findElementByTagName("style");	
-			}catch(NoSuchElementException exception){
+				driverChrome.findElementByTagName("style");
+			} catch (NoSuchElementException exception) {
 				result = false;
 				System.out.println("there aren't style in the site");
 			}
 		}
-		if(nameDriver.equals("InternetExplorerDriver")) {
+		if (nameDriver.equals("InternetExplorerDriver")) {
 			InternetExplorerDriver driverIE = (InternetExplorerDriver) driver;
 			try {
-				driverIE.findElementByTagName("style");	
-			}catch(NoSuchElementException exception){
+				driverIE.findElementByTagName("style");
+			} catch (NoSuchElementException exception) {
 				result = false;
 				System.out.println("there aren't style in the site");
 			}
 		}
 		return result;
 	}
-	
-	public boolean comparisonResult(ArrayList<String> elClickjackingSite, ArrayList<String> elOriginalSIte,
-		boolean styleClickAttack, boolean styleOriginal) {
-		
+
+	public boolean comparisonResult(ArrayList<String> elClickjackingSite, ArrayList<String> elOriginalSite,
+			boolean styleClickAttack, boolean styleOriginal) {
+
 		boolean resultStyle = false;
 		boolean resultHref = false;
-		if(styleClickAttack==styleOriginal)
+		if (styleClickAttack == styleOriginal)
 			resultStyle = true;
-		if(elOriginalSIte.size()==elClickjackingSite.size()) {
-		 resultHref = true;
+		if (elOriginalSite.size() == elClickjackingSite.size()) {
+			resultHref = true;
 
-		}
-		else {
+		} else {
 			resultHref = false;
 		}
 		System.out.println("result style: " + resultStyle);
 		System.out.println("result href: " + resultHref);
-		if(resultStyle && resultHref)
+		if (resultStyle && resultHref)
 			return true;
 		else
 			return false;
@@ -331,11 +334,17 @@ public class TestingClickJacking {
 	public String executionTest() throws IOException {
 		for (int i = 0; i < listAttack.length; i++) {
 			if (listAttack[i]) {
-				test(listClickJacking[i], browser[i], i);
+				if (test(listClickJacking[i], browser[i], i))
+					break;
 			}
 		}
-		return "" + (results[0] ? "1" : "0") + (results[1] ? "1" : "0")+ (results[2] ? "1" : "0")
-				+ (results[3]  ? "1" : "0") + (results[4] ? "1" : "0")+ (results[5] ? "1" : "0") + (results[6] ? "1" : "0");
+		return "" + (results[0] ? "1" : "0") + (results[1] ? "1" : "0") + (results[2] ? "1" : "0")
+				+ (results[3] ? "1" : "0") + (results[4] ? "1" : "0") + (results[5] ? "1" : "0")
+				+ (results[6] ? "1" : "0");
+	}
+
+	public boolean getFailConnection() {
+		return this.failConnection;
 	}
 
 	public String writeCSV() throws IOException {
@@ -393,13 +402,17 @@ public class TestingClickJacking {
 	public void cleanEnviroment() {
 		for (int i = 0; i < listAttack.length; i++) {
 			if (listAttack[i]) {
-				DeleteFile(listClickJacking[i].getHtmlFile().getPath());
+				if (i != 2)
+					DeleteFile(listClickJacking[i].getHtmlFile());
+				else {
+					DeleteFile(listClickJacking[i].getHtmlFile());
+					DeleteFile(((Fictitious2) listClickJacking[i]).getHtmlFile2());
+				}
 			}
 		}
 	}
 
-	public void DeleteFile(String path) {
-		File f = new File(path);
+	public void DeleteFile(File f) {
 		if (f.delete()) {
 			System.out.println("Deleted the file: " + f.getName());
 		} else {
