@@ -347,57 +347,7 @@ public class TestingClickJacking {
 		return this.failConnection;
 	}
 
-	public String writeCSV() throws IOException {
-		String csv = "src\\main\\webapp\\csv\\test.csv";
-		FileWriter sb = new FileWriter(new FileCustom(csv).getFile());
-
-		sb.append("DisablingJavascript");
-		sb.append(',');
-		sb.append("DoubleFraming");
-		sb.append(',');
-		sb.append("FilterXSS");
-		sb.append(',');
-		sb.append("onBeforeUnloadEvent");
-		sb.append(',');
-		sb.append("Redefininglocation");
-		sb.append('\n');
-
-		if (listAttack[0]) {
-			sb.append((results[0] && results[1] ? "false" : "true"));
-			sb.append(',');
-		} else {
-			sb.append("null,");
-		}
-		if (listAttack[2]) {
-			sb.append((results[2] ? "false" : "true"));
-			sb.append(',');
-		} else {
-			sb.append("null,");
-		}
-		if (listAttack[3]) {
-			sb.append((results[3] && results[4] ? "false" : "true"));
-			sb.append(',');
-		} else {
-			sb.append("null,");
-		}
-		if (listAttack[5]) {
-			sb.append((results[5] ? "false" : "true"));
-			sb.append(',');
-		} else {
-			sb.append("null,");
-		}
-		if (listAttack[6]) {
-			sb.append((results[6] ? "false" : "true"));
-			sb.append('\n');
-		} else {
-			sb.append("null\n");
-		}
-
-		sb.flush();
-		sb.close();
-
-		return csv;
-	}
+	
 
 	public void cleanEnviroment() {
 		for (int i = 0; i < listAttack.length; i++) {

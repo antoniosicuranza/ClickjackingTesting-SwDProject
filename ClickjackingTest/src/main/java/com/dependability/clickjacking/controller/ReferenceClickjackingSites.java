@@ -46,7 +46,6 @@ public class ReferenceClickjackingSites extends HttpServlet {
 		results = test.executionTest();
 		if (!test.getFailConnection()) {
 			request.setAttribute("results", results);
-			request.setAttribute("csv", test.writeCSV());
 			request.setAttribute("executed",
 					"" + (check[0] ? "1" : "0") + (check[1] ? "1" : "0") + (check[2] ? "1" : "0")
 							+ (check[3] ? "1" : "0") + (check[4] ? "1" : "0") + (check[5] ? "1" : "0")
