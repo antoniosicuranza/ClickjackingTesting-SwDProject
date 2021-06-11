@@ -12,10 +12,12 @@ import com.dependability.clickjacking.file.FileCustom;
 public class Fictitious2 implements ClickJacking {
 	String src;
 	private File f;
-
+	private Fictitious1 fictitious;
+	
 	public Fictitious2(String src) throws IOException{
 		this.src = src;
 		f = (new FileCustom("src/main/webapp/html_generated/fictitious2.html")).getFile();
+		fictitious = new Fictitious1(src);
 	}
 	@Override
 	public void creation() throws IOException{
@@ -51,6 +53,9 @@ public class Fictitious2 implements ClickJacking {
 	public File getHtmlFile() {
 		return f;
 	}
+	public File getHtmlFile2() {
+		return fictitious.getHtmlFile();
+		}
 	
 	@Override
 	public void setHtmlFile(File f) {
