@@ -1,4 +1,5 @@
 # ClickjackingTesting-SwDProject
+for Windows
 ## Installation
 1. Development Platform - Eclipse
     - [Download Eclipse](https://www.eclipse.org/downloads/)
@@ -11,7 +12,7 @@
 ```
 path_project = C:/Users/.../ClickjackingTest/
 ```
-5. Run the server.
+5. Run the server on the port 8080.
 
 ## Tips to avoid problems
 1. Eclipse problem auto-refresh: To set auto-refresh, go to window > preferences > general > workspace and check the refresh using native hooks or polling and refresh on access check-boxes. 
