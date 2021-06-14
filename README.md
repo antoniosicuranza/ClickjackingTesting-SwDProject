@@ -1,18 +1,20 @@
 # ClickjackingTesting-SwDProject
-for Windows
+## Introduction
+This is a Web App that permit to detect if your site is vulnerable or not from ClickJacking attacks.
 ## Installation
-1. Development Platform - Eclipse
+1. for Windows
+2. Development Platform - Eclipse
     - [Download Eclipse](https://www.eclipse.org/downloads/)
-2. Server - Apache Tomcat Server
+3. Server - Apache Tomcat Server
     - [Download Apache Tomcat Server](https://tomcat.apache.org/download-90.cgi)
     
-3. Clone the repository and import it to eclipse.
-4. Configure file */WEB-INF/classes/config.properties*.
+5. Clone the repository and import it to eclipse.
+6. Configure file */WEB-INF/classes/config.properties*.
 
 ```
 path_project = C:/Users/.../ClickjackingTest/
 ```
-5. Run the server on the port 8080.
+7. Run the server on the port 8080.
 
 ## Tips to avoid problems
 1. Eclipse problem auto-refresh: To set auto-refresh, go to window > preferences > general > workspace and check the refresh using native hooks or polling and refresh on access check-boxes. 
