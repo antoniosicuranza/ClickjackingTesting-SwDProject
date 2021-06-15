@@ -164,7 +164,7 @@ public class TestingClickJacking {
 		String link = "http://localhost:8080/ClickjackingTest/html_generated/" + clickJacking.getHtmlFile().getName();
 		TestPageOk testPage = new TestPageOk(link, 5);
 		System.setProperty("webdriver.chrome.driver", pathChromeDriver);
-		ChromeDriver driverOriginalSite = new ChromeDriver();
+		ChromeDriver notAttackedPage = new ChromeDriver();
 		try {
 			System.out.println(testPage.testPageExist());
 		} catch (ErrorPage e) {
@@ -178,45 +178,45 @@ public class TestingClickJacking {
 
 				System.setProperty("webdriver.chrome.driver", pathChromeDriver);
 				ChromeDriver driverSwitchChrome = new ChromeDriver();
-				ChromeDriver driverChrome;
+				ChromeDriver attackedSiteChrome;
 
-				driverOriginalSite.get(clickJacking.getSrc());
+				notAttackedPage.get(clickJacking.getSrc());
 				driverSwitchChrome.get(link);
 
 				try {
 					while (true)
 						driverSwitchChrome.switchTo().frame(driverSwitchChrome.findElementByClassName("malicious"));
 				} catch (NoSuchElementException exception) {
-					driverChrome = driverSwitchChrome;
+					attackedSiteChrome = driverSwitchChrome;
 				}
-				ArrayList<String> elClickjackingSite = takingHref(driverChrome);
-				ArrayList<String> elOriginalSite = takingHref(driverOriginalSite);
-				boolean styleClickAttack = takingStyle(driverChrome);
-				boolean styleOriginal = takingStyle(driverOriginalSite);
+				ArrayList<String> elClickjackingSite = takingHref(attackedSiteChrome);
+				ArrayList<String> elOriginalSite = takingHref(notAttackedPage);
+				boolean styleClickAttack = takingStyle(attackedSiteChrome);
+				boolean styleOriginal = takingStyle(notAttackedPage);
 				result = comparisonResult(elClickjackingSite, elOriginalSite, styleClickAttack, styleOriginal);
-				driverOriginalSite.quit();
-				driverChrome.quit();
+				notAttackedPage.quit();
+				attackedSiteChrome.quit();
 			} else if (browser == 1) {
 				System.setProperty("webdriver.ie.driver", pathExplorerDriver);
 				InternetExplorerDriver driverSwitchIE = new InternetExplorerDriver();
-				InternetExplorerDriver driverIE;
+				InternetExplorerDriver attackedSiteIE;
 
-				driverOriginalSite.get(clickJacking.getSrc());
+				notAttackedPage.get(clickJacking.getSrc());
 				driverSwitchIE.get(link);
 
 				try {
 					while (true)
 						driverSwitchIE.switchTo().frame(driverSwitchIE.findElementByClassName("malicious"));
 				} catch (NoSuchElementException exception) {
-					driverIE = driverSwitchIE;
+					attackedSiteIE = driverSwitchIE;
 				}
-				ArrayList<String> elClickjackingSite = takingHref(driverIE);
-				ArrayList<String> elOriginalSIte = takingHref(driverOriginalSite);
-				boolean styleClickAttack = takingStyle(driverIE);
-				boolean styleOriginal = takingStyle(driverOriginalSite);
+				ArrayList<String> elClickjackingSite = takingHref(attackedSiteIE);
+				ArrayList<String> elOriginalSIte = takingHref(notAttackedPage);
+				boolean styleClickAttack = takingStyle(attackedSiteIE);
+				boolean styleOriginal = takingStyle(notAttackedPage);
 				result = comparisonResult(elClickjackingSite, elOriginalSIte, styleClickAttack, styleOriginal);
-				driverOriginalSite.quit();
-				driverIE.quit();
+				notAttackedPage.quit();
+				attackedSiteIE.quit();
 			}
 			System.out.println("result: " + result);
 			results[idAttack] = result;
@@ -314,14 +314,13 @@ public class TestingClickJacking {
 
 		boolean resultStyle = false;
 		boolean resultHref = false;
+		
 		if (styleClickAttack == styleOriginal)
 			resultStyle = true;
-		if (elOriginalSite.size() == elClickjackingSite.size()) {
+		
+		if (elOriginalSite.size() == elClickjackingSite.size()) 
 			resultHref = true;
 
-		} else {
-			resultHref = false;
-		}
 		System.out.println("result style: " + resultStyle);
 		System.out.println("result href: " + resultHref);
 		if (resultStyle && resultHref)
